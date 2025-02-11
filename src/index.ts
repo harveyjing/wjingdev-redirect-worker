@@ -13,16 +13,9 @@
 
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
-		// check if request's domain is wjing.dev,
-		// if it is, redirect to www.wjing.dev，
-		// otherwise, return error 400 and message "domain not allowed"
-		// Don't lost the path and query string
-		
+		// redirect all requests to www.wjing.dev
 		const url = new URL(request.url);
-		if (url.hostname === 'wjing.dev') {
-			url.hostname = 'www.wjing.dev';
-			return Response.redirect(url.toString(), 301);
-		}
-		return new Response('domain not allowed', { status: 400 });
+		url.hostname = 'www.wjing.dev';
+		return Response.redirect(url.toString(), 301);
 	},
 } satisfies ExportedHandler<Env>;
